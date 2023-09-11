@@ -1,0 +1,1939 @@
+From 334ff3addad9778db6233cfabafadb987fd7cf7c Mon Sep 17 00:00:00 2001
+From: "hoang5.nguyen" <hoang5.nguyen@lge.com>
+Date: Thu, 31 Aug 2023 11:19:37 +0700
+Subject: [PATCH] remove builder, combined, prototype to make source code work
+
+---
+ .../house/GingerbreadHouseBuilder.java        |  36 ----
+ .../designpatterns/builder/house/House.java   |  65 ------
+ .../builder/house/HouseBuilder.java           |  31 ---
+ .../builder/house/HouseDirector.java          |  35 ----
+ .../builder/house/InteriorWall.java           |  20 --
+ .../designpatterns/builder/house/Roof.java    |  19 --
+ .../builder/house/StoneHouseBuilder.java      |  37 ----
+ .../designpatterns/builder/house/Wall.java    |  19 --
+ .../designpatterns/builder/house/Window.java  |  19 --
+ .../builder/house/WoodHouseBuilder.java       |  44 -----
+ .../builder/pizza/MeatPizzaBuilder.java       |  40 ----
+ .../designpatterns/builder/pizza/Pizza.java   |  50 -----
+ .../builder/pizza/PizzaBuilder.java           |  24 ---
+ .../builder/pizza/PizzaDirector.java          |  56 ------
+ .../builder/pizza/VeggiePizzaBuilder.java     |  41 ----
+ .../combined/djview/BPMObserver.java          |   5 -
+ .../combined/djview/BeatBar.java              |  27 ---
+ .../combined/djview/BeatController.java       |  42 ----
+ .../combined/djview/BeatModel.java            | 107 ----------
+ .../combined/djview/BeatModelInterface.java   |  21 --
+ .../combined/djview/BeatObserver.java         |   5 -
+ .../combined/djview/ControllerInterface.java  |   9 -
+ .../combined/djview/DJTestDrive.java          |   9 -
+ .../combined/djview/DJView.java               | 187 ------------------
+ .../combined/djview/DJViewHttpHandler.java    | 101 ----------
+ .../combined/djview/DJViewHttpServer.java     |  26 ---
+ .../combined/djview/DJViewServlet.java        |  77 --------
+ .../combined/djview/HeartAdapter.java         |  37 ----
+ .../combined/djview/HeartController.java      |  28 ---
+ .../combined/djview/HeartModel.java           |  79 --------
+ .../combined/djview/HeartModelInterface.java  |   9 -
+ .../combined/djview/HeartTestDrive.java       |   9 -
+ .../designpatterns/combined/djview/README.md  |  66 -------
+ .../combined/djview/jsp/WEB-INF/web.xml       |  40 ----
+ .../combined/djview/jsp/djview.jsp            |  29 ---
+ .../combined/djview/jsp/index.html            |  10 -
+ .../designpatterns/prototype/Client.java      |  25 ---
+ .../designpatterns/prototype/Dragon.java      |  13 --
+ .../designpatterns/prototype/Drakon.java      |  16 --
+ .../designpatterns/prototype/Monster.java     |  26 ---
+ .../designpatterns/prototype/monsters.html    |  50 -----
+ 41 files changed, 1589 deletions(-)
+ delete mode 100644 src/headfirst/designpatterns/builder/house/GingerbreadHouseBuilder.java
+ delete mode 100755 src/headfirst/designpatterns/builder/house/House.java
+ delete mode 100644 src/headfirst/designpatterns/builder/house/HouseBuilder.java
+ delete mode 100755 src/headfirst/designpatterns/builder/house/HouseDirector.java
+ delete mode 100755 src/headfirst/designpatterns/builder/house/InteriorWall.java
+ delete mode 100755 src/headfirst/designpatterns/builder/house/Roof.java
+ delete mode 100644 src/headfirst/designpatterns/builder/house/StoneHouseBuilder.java
+ delete mode 100755 src/headfirst/designpatterns/builder/house/Wall.java
+ delete mode 100755 src/headfirst/designpatterns/builder/house/Window.java
+ delete mode 100644 src/headfirst/designpatterns/builder/house/WoodHouseBuilder.java
+ delete mode 100644 src/headfirst/designpatterns/builder/pizza/MeatPizzaBuilder.java
+ delete mode 100755 src/headfirst/designpatterns/builder/pizza/Pizza.java
+ delete mode 100644 src/headfirst/designpatterns/builder/pizza/PizzaBuilder.java
+ delete mode 100755 src/headfirst/designpatterns/builder/pizza/PizzaDirector.java
+ delete mode 100644 src/headfirst/designpatterns/builder/pizza/VeggiePizzaBuilder.java
+ delete mode 100755 src/headfirst/designpatterns/combined/djview/BPMObserver.java
+ delete mode 100755 src/headfirst/designpatterns/combined/djview/BeatBar.java
+ delete mode 100755 src/headfirst/designpatterns/combined/djview/BeatController.java
+ delete mode 100755 src/headfirst/designpatterns/combined/djview/BeatModel.java
+ delete mode 100755 src/headfirst/designpatterns/combined/djview/BeatModelInterface.java
+ delete mode 100755 src/headfirst/designpatterns/combined/djview/BeatObserver.java
+ delete mode 100755 src/headfirst/designpatterns/combined/djview/ControllerInterface.java
+ delete mode 100755 src/headfirst/designpatterns/combined/djview/DJTestDrive.java
+ delete mode 100755 src/headfirst/designpatterns/combined/djview/DJView.java
+ delete mode 100644 src/headfirst/designpatterns/combined/djview/DJViewHttpHandler.java
+ delete mode 100755 src/headfirst/designpatterns/combined/djview/DJViewHttpServer.java
+ delete mode 100644 src/headfirst/designpatterns/combined/djview/DJViewServlet.java
+ delete mode 100755 src/headfirst/designpatterns/combined/djview/HeartAdapter.java
+ delete mode 100755 src/headfirst/designpatterns/combined/djview/HeartController.java
+ delete mode 100755 src/headfirst/designpatterns/combined/djview/HeartModel.java
+ delete mode 100755 src/headfirst/designpatterns/combined/djview/HeartModelInterface.java
+ delete mode 100755 src/headfirst/designpatterns/combined/djview/HeartTestDrive.java
+ delete mode 100644 src/headfirst/designpatterns/combined/djview/README.md
+ delete mode 100644 src/headfirst/designpatterns/combined/djview/jsp/WEB-INF/web.xml
+ delete mode 100644 src/headfirst/designpatterns/combined/djview/jsp/djview.jsp
+ delete mode 100644 src/headfirst/designpatterns/combined/djview/jsp/index.html
+ delete mode 100644 src/headfirst/designpatterns/prototype/Client.java
+ delete mode 100644 src/headfirst/designpatterns/prototype/Dragon.java
+ delete mode 100644 src/headfirst/designpatterns/prototype/Drakon.java
+ delete mode 100644 src/headfirst/designpatterns/prototype/Monster.java
+ delete mode 100644 src/headfirst/designpatterns/prototype/monsters.html
+
+diff --git a/src/headfirst/designpatterns/builder/house/GingerbreadHouseBuilder.java b/src/headfirst/designpatterns/builder/house/GingerbreadHouseBuilder.java
+deleted file mode 100644
+index ae39c44..0000000
+--- a/src/headfirst/designpatterns/builder/house/GingerbreadHouseBuilder.java
++++ /dev/null
+@@ -1,36 +0,0 @@
+-package headfirst.designpatterns.builder.house;
+-
+-public class GingerbreadHouseBuilder extends HouseBuilder {
+-	int numWalls = 4;
+-	int numWindows = 4;
+-	String windowMaterial = "Sugar";
+-	String wallMaterial = "Gingerbread and icing";
+-	String roofMaterial = "Twizzlers";
+-	public GingerbreadHouseBuilder() {
+-		this.builderName = "Gingerbread House Builder";
+-		setHouseType(HouseType.GINGERBREAD);
+-	}
+-	public HouseBuilder addWalls() {
+-		// add exterior walls
+-		for (int i = 0; i < numWalls; i++) {
+-			System.out.println("Adding wall made out of " + wallMaterial);
+-			house.addWall(new Wall(wallMaterial));
+-		}
+-		return this;
+-	}
+-	public HouseBuilder addWindows() {
+-		for (int i = 0; i < numWindows; i++) {
+-			System.out.println("Adding window made out of " + windowMaterial);
+-			house.addWindow(new Window(windowMaterial));
+-		}
+-		return this;
+-	}
+-	public HouseBuilder addRoof() {
+-		house.addRoof(new Roof(roofMaterial));
+-		return this;
+-	}
+-	public House build() {
+-		System.out.println("Stick everything together with icing");
+-		return house;
+-	}
+-}
+\ No newline at end of file
+diff --git a/src/headfirst/designpatterns/builder/house/House.java b/src/headfirst/designpatterns/builder/house/House.java
+deleted file mode 100755
+index fbd4f11..0000000
+--- a/src/headfirst/designpatterns/builder/house/House.java
++++ /dev/null
+@@ -1,65 +0,0 @@
+-package headfirst.designpatterns.builder.house;
+-
+-import headfirst.designpatterns.builder.house.HouseBuilder.HouseType;
+-import java.util.*;
+-
+-public class House {
+-	String name;
+-	HouseType houseType;
+-	Roof roof;
+-	List<Wall> walls;
+-	List<Window> windows;
+-	
+-	public House() {
+-		this.walls = new ArrayList<Wall>();
+-		this.windows = new ArrayList<Window>();
+-	}
+-	public House setHouseType(HouseType houseType) {
+-		this.houseType = houseType;
+-		switch (houseType) {
+-			case WOOD: this.name = "My wood house"; break;
+-			case CLAY: this.name = "My clay house"; break;
+-			case GINGERBREAD: this.name = "My holiday gingerbread house"; break;
+-			case STONE: this.name = "My stone house"; break;
+-		}
+-		return this;
+-	}
+-	House addRoof(Roof roof) {
+-		this.roof = roof;
+-		return this;
+-	}
+-	House addWall(Wall wall) {
+-		this.walls.add(wall);
+-		return this;
+-	}
+-	House addWindow(Window window) {
+-		this.windows.add(window);
+-		return this;
+-	}
+-	public void setName(String name) {
+-		this.name = name;
+-	}
+-
+-	public String toString() {
+-		// Use a StringBuilder to build the string :-)
+-		// Like StringBuffer, but not synchronized
+-		StringBuilder display = new StringBuilder();
+-		display.append("---- " + this.name + " ----\n");
+-		for (Wall wall : walls) {
+-			display.append("--- " + wall.name + " ---\n");
+-		}
+-		for (Window window : windows) {
+-			display.append("--- " + window.name + " ---\n");
+-		}
+-		display.append("--- " + roof.name + " ---\n");
+-		return display.toString();
+-		
+-		// There is some difference of opinion about StringBuilder and whether it's using
+-		// the Builder pattern or not. Some say yes, some say no.
+-		// StringBuilder does not provide an abstract API with multiple subclasses for
+-		//   creating different representations (variations).
+-	}
+-}
+-
+- 
+- 
+diff --git a/src/headfirst/designpatterns/builder/house/HouseBuilder.java b/src/headfirst/designpatterns/builder/house/HouseBuilder.java
+deleted file mode 100644
+index 023ec19..0000000
+--- a/src/headfirst/designpatterns/builder/house/HouseBuilder.java
++++ /dev/null
+@@ -1,31 +0,0 @@
+-package headfirst.designpatterns.builder.house;
+-
+-import java.util.ArrayList;
+-import java.util.List;
+-
+-public abstract class HouseBuilder {
+-	String builderName;
+-	enum HouseType {
+-		WOOD, CLAY, GINGERBREAD, STONE 
+-	}
+-	HouseType houseType;
+-	House house = new House();
+-	
+-	public void setHouseType(HouseType houseType) {
+-		this.houseType = houseType;
+-		house.setHouseType(houseType);
+-	}
+-	// Each method in the Builder returns the Builder so we can use the Fluent Interface Pattern
+-	public abstract HouseBuilder addWalls();
+-	public abstract HouseBuilder addRoof();
+-	public abstract HouseBuilder addWindows();
+-
+-	public House build() {
+-		System.out.println("Build the house!");
+-		// Very simple build -- just return the house!
+-		// We've added all the parts... 
+-		// In a real build, we'd have to nail and screw everything together of course.
+-		// And add wiring and so on.
+-		return house;
+-	}
+-}
+\ No newline at end of file
+diff --git a/src/headfirst/designpatterns/builder/house/HouseDirector.java b/src/headfirst/designpatterns/builder/house/HouseDirector.java
+deleted file mode 100755
+index e73377e..0000000
+--- a/src/headfirst/designpatterns/builder/house/HouseDirector.java
++++ /dev/null
+@@ -1,35 +0,0 @@
+-package headfirst.designpatterns.builder.house;
+-
+-public class HouseDirector {
+- 
+-	// Fluent Interface pattern (return the builder each time so we can string the calls together)
+-	// Builder pattern (we have two different builders so the "same construction process can create
+-	//   different representations").
+-	// Builder is a solution to the telescoping constructor anti-pattern, where we have multiple,
+-	//   complex constructor methods with various args for all various combinations of options
+-	//   in construction options. 
+-	
+-	// in this example main() is the construct() method
+-	public static void main(String[] args) {
+-		// The Director calls the methods in the correct order to build a house. 
+-		// Could make this a lot more complicated to allow number of walls, windows, to be passed in.
+-		
+-		HouseBuilder woodHouseBuilder = new WoodHouseBuilder();
+-		House woodHouse = woodHouseBuilder.addWalls().addWindows().addRoof().build();
+-		System.out.println(woodHouse);
+-		
+-		HouseBuilder clayHouseBuilder = new ClayHouseBuilder();
+-		House clayHouse = clayHouseBuilder.addWalls().addWindows().addRoof().build();
+-		System.out.println(clayHouse);
+-		
+-		HouseBuilder gingerbreadHouseBuilder = new GingerbreadHouseBuilder();
+-		House gingerbreadHouse = gingerbreadHouseBuilder.addWalls().addWindows().addRoof().build();
+-		System.out.println(gingerbreadHouse);
+-		
+-		// Builder has similarities to Abstract Factory.
+-		// But difference is that Builder provides a step by step API for building a product;
+-		//   the client is responsible for calling the steps, and those can vary in order, etc.
+-		//   With Builder, the client must have more knowledge of the details of the product being built.
+-		// Product implementations can be swapped for others; clients don't change because the use the abstract API.
+-	}
+-}
+diff --git a/src/headfirst/designpatterns/builder/house/InteriorWall.java b/src/headfirst/designpatterns/builder/house/InteriorWall.java
+deleted file mode 100755
+index 004be32..0000000
+--- a/src/headfirst/designpatterns/builder/house/InteriorWall.java
++++ /dev/null
+@@ -1,20 +0,0 @@
+-package headfirst.designpatterns.builder.house;
+-
+-public class InteriorWall extends Wall {
+-	String name;
+-	String material;
+-	
+-	public InteriorWall(String material) {
+-		super(material);
+-		this.name = "Interior wall made out of " + material;
+-	}
+-	public void setName(String name) {
+-		this.name = name;
+-	}
+-	public String toString() {
+-		return this.name;
+-	}
+-}
+-
+- 
+- 
+diff --git a/src/headfirst/designpatterns/builder/house/Roof.java b/src/headfirst/designpatterns/builder/house/Roof.java
+deleted file mode 100755
+index 2ab858b..0000000
+--- a/src/headfirst/designpatterns/builder/house/Roof.java
++++ /dev/null
+@@ -1,19 +0,0 @@
+-package headfirst.designpatterns.builder.house;
+-
+-public class Roof {
+-	String name;
+-	String material;
+-	
+-	public Roof(String material) {
+-		this.name = "Roof made out of " + material;
+-	}
+-	public void setName(String name) {
+-		this.name = name;
+-	}
+-	public String toString() {
+-		return this.name;
+-	}
+-}
+-
+- 
+- 
+diff --git a/src/headfirst/designpatterns/builder/house/StoneHouseBuilder.java b/src/headfirst/designpatterns/builder/house/StoneHouseBuilder.java
+deleted file mode 100644
+index 07377af..0000000
+--- a/src/headfirst/designpatterns/builder/house/StoneHouseBuilder.java
++++ /dev/null
+@@ -1,37 +0,0 @@
+-package headfirst.designpatterns.builder.house;
+-
+-public class StoneHouseBuilder extends HouseBuilder {
+-	int numWalls = 5;     // Stone houses have 5 walls: 4 exterior, 1 interior
+-	int numWindows = 20;  // Stone houses have a lot of windows
+-	String windowMaterial = "Antique glass";
+-	String wallMaterial = "Stone, 2 feet thick";
+-	String interiorWallMaterial = "Stone, 1 foot thick";
+-	String roofMaterial = "Tile";
+-	public StoneHouseBuilder() {
+-		this.builderName = "Stone House Builder";
+-		setHouseType(HouseType.STONE);
+-	}
+-	public HouseBuilder addWalls() {
+-		// Add 4 exterior walls
+-		for (int i = 0; i < numWalls-1; i++) {
+-			house.addWall(new Wall(interiorWallMaterial));
+-		}
+-		// Add 1 interior wall
+-		house.addWall(new InteriorWall(wallMaterial));
+-		return this;
+-	}
+-	public HouseBuilder addWindows() {
+-		for (int i = 0; i < numWindows; i++) {
+-			house.addWindow(new Window(windowMaterial));
+-		}
+-		return this;
+-	}
+-	public HouseBuilder addRoof() {
+-		house.addRoof(new Roof(roofMaterial));
+-		return this;
+-	}
+-	public House build() {
+-		System.out.println("Stick everything together with mortar");
+-		return house;
+-	}
+-}
+\ No newline at end of file
+diff --git a/src/headfirst/designpatterns/builder/house/Wall.java b/src/headfirst/designpatterns/builder/house/Wall.java
+deleted file mode 100755
+index 73a67e5..0000000
+--- a/src/headfirst/designpatterns/builder/house/Wall.java
++++ /dev/null
+@@ -1,19 +0,0 @@
+-package headfirst.designpatterns.builder.house;
+-
+-public class Wall {
+-	String name;
+-	String material;
+-	
+-	public Wall(String material) {
+-		this.name = "Wall made out of " + material;
+-	}
+-	public void setName(String name) {
+-		this.name = name;
+-	}
+-	public String toString() {
+-		return this.name;
+-	}
+-}
+-
+- 
+- 
+diff --git a/src/headfirst/designpatterns/builder/house/Window.java b/src/headfirst/designpatterns/builder/house/Window.java
+deleted file mode 100755
+index 15cf7b9..0000000
+--- a/src/headfirst/designpatterns/builder/house/Window.java
++++ /dev/null
+@@ -1,19 +0,0 @@
+-package headfirst.designpatterns.builder.house;
+-
+-public class Window {
+-	String name;
+-	String material;
+-	
+-	public Window(String material) {
+-		this.name = "Window made out of " + material;
+-	}
+-	public void setName(String name) {
+-		this.name = name;
+-	}
+-	public String toString() {
+-		return this.name;
+-	}
+-}
+-
+- 
+- 
+diff --git a/src/headfirst/designpatterns/builder/house/WoodHouseBuilder.java b/src/headfirst/designpatterns/builder/house/WoodHouseBuilder.java
+deleted file mode 100644
+index ff04c25..0000000
+--- a/src/headfirst/designpatterns/builder/house/WoodHouseBuilder.java
++++ /dev/null
+@@ -1,44 +0,0 @@
+-package headfirst.designpatterns.builder.house;
+-
+-import headfirst.designpatterns.builder.house.HouseBuilder.HouseType;
+-
+-public class WoodHouseBuilder extends HouseBuilder {
+-	int numWalls = 6;     // 4 exterior walls, 2 interior
+-	int numWindows = 10;  
+-	String windowMaterial = "Tempered glass";
+-	String wallMaterial = "Wood, 4x6";
+-	String interiorWallMaterial = "Wood, 2x4";
+-	String roofMaterial = "Metal";
+-	public WoodHouseBuilder() {
+-		this.builderName = "Wood House Builder";
+-		setHouseType(HouseType.WOOD);
+-	}
+-	public HouseBuilder addWalls() {
+-		// add exterior walls
+-		for (int i = 0; i < 4; i++) {
+-			System.out.println("Nailing wood for wall made out of " + wallMaterial);
+-			house.addWall(new Wall(wallMaterial));
+-		}
+-		// add interior walls
+-		for (int i = 0; i < numWalls - 4; i++) {
+-			System.out.println("Nailing wood for interior wall made out of " + interiorWallMaterial);
+-			house.addWall(new InteriorWall(interiorWallMaterial));
+-		}
+-		return this;
+-	}
+-	public HouseBuilder addWindows() {
+-		for (int i = 0; i < numWindows; i++) {
+-			System.out.println("Adding window made out of " + windowMaterial);
+-			house.addWindow(new Window(windowMaterial));
+-		}
+-		return this;
+-	}
+-	public HouseBuilder addRoof() {
+-		house.addRoof(new Roof(roofMaterial));
+-		return this;
+-	}
+-	public House build() {
+-		System.out.println("Nail everything together");
+-		return house;
+-	}
+-}
+\ No newline at end of file
+diff --git a/src/headfirst/designpatterns/builder/pizza/MeatPizzaBuilder.java b/src/headfirst/designpatterns/builder/pizza/MeatPizzaBuilder.java
+deleted file mode 100644
+index 64b2b75..0000000
+--- a/src/headfirst/designpatterns/builder/pizza/MeatPizzaBuilder.java
++++ /dev/null
+@@ -1,40 +0,0 @@
+-package headfirst.designpatterns.builder.pizza;
+-
+-public class MeatLoversPizzaBuilder extends PizzaBuilder {
+-	public MeatLoversPizzaBuilder() {
+-		this.name = "Meat Lovers Pizza";
+-	}
+-	public PizzaBuilder addCheese() {
+-		// meat lovers like moz
+-		this.toppings.add("mozzerella");
+-		return this;
+-	}
+-	public PizzaBuilder addSauce() {
+-		this.toppings.add("NY style sauce");
+-		return this;
+-	}
+-	public PizzaBuilder addTomatoes() {
+-		this.toppings.add("sliced tomatoes");
+-		return this;
+-	}
+-	public PizzaBuilder addGarlic() {
+-		this.toppings.add("garlic");
+-		return this;
+-	}
+-	public PizzaBuilder addOlives() {
+-		// never add olives to meat lovers pizza
+-		return this;
+-	}
+-	public PizzaBuilder addSpinach() {
+-		// never add spinach to meat lovers pizza
+-		return this;
+-	}
+-	public PizzaBuilder addPepperoni() {
+-		this.toppings.add("pepperoni");
+-		return this;
+-	}
+-	public PizzaBuilder addSausage() {
+-		this.toppings.add("sausage");
+-		return this;
+-	}	
+-}
+\ No newline at end of file
+diff --git a/src/headfirst/designpatterns/builder/pizza/Pizza.java b/src/headfirst/designpatterns/builder/pizza/Pizza.java
+deleted file mode 100755
+index 5b87976..0000000
+--- a/src/headfirst/designpatterns/builder/pizza/Pizza.java
++++ /dev/null
+@@ -1,50 +0,0 @@
+-package headfirst.designpatterns.builder.pizza;
+-
+-import java.util.*;
+-
+-public class Pizza {
+-	String name;
+-	List<String> toppings;
+-	
+-	void addToppings(List<String> toppings) {
+-		this.toppings = toppings;
+-	}
+- 
+-	void prepare() {
+-		System.out.println("Prepare " + name);
+-		System.out.println("Tossing dough...");
+-		System.out.println("Adding sauce...");
+-		System.out.println("Adding toppings: ");
+-		for (String topping : toppings) {
+-			System.out.println("   " + topping);
+-		}
+-	}
+-  
+-	void bake() {
+-		System.out.println("Bake for 25 minutes at 350");
+-	}
+- 
+-	void cut() {
+-		System.out.println("Cut the pizza into diagonal slices");
+-	}
+-  
+-	void box() {
+-		System.out.println("Place pizza in official PizzaStore box");
+-	}
+- 
+-	public void setName(String name) {
+-		this.name = name;
+-	}
+-
+-	public String toString() {
+-		StringBuffer display = new StringBuffer();
+-		display.append("---- " + this.name + " ----\n");
+-		for (String topping : toppings) {
+-			display.append(topping + "\n");
+-		}
+-		return display.toString();
+-	}
+-}
+-
+- 
+- 
+diff --git a/src/headfirst/designpatterns/builder/pizza/PizzaBuilder.java b/src/headfirst/designpatterns/builder/pizza/PizzaBuilder.java
+deleted file mode 100644
+index b09ace2..0000000
+--- a/src/headfirst/designpatterns/builder/pizza/PizzaBuilder.java
++++ /dev/null
+@@ -1,24 +0,0 @@
+-package headfirst.designpatterns.builder.pizza;
+-
+-import java.util.ArrayList;
+-import java.util.List;
+-
+-public abstract class PizzaBuilder {
+-	String name;
+-	List<String> toppings = new ArrayList<String>();
+-	
+-	public abstract PizzaBuilder addCheese();
+-	public abstract PizzaBuilder addSauce();
+-	public abstract PizzaBuilder addTomatoes();
+-	public abstract PizzaBuilder addGarlic();
+-	public abstract PizzaBuilder addOlives();
+-	public abstract PizzaBuilder addSpinach();
+-	public abstract PizzaBuilder addPepperoni();
+-	public abstract PizzaBuilder addSausage();
+-	public Pizza build() {
+-		Pizza pizza = new Pizza();
+-		pizza.setName(this.name);
+-		pizza.addToppings(toppings);
+-		return pizza;
+-	}
+-}
+\ No newline at end of file
+diff --git a/src/headfirst/designpatterns/builder/pizza/PizzaDirector.java b/src/headfirst/designpatterns/builder/pizza/PizzaDirector.java
+deleted file mode 100755
+index 56ecb99..0000000
+--- a/src/headfirst/designpatterns/builder/pizza/PizzaDirector.java
++++ /dev/null
+@@ -1,56 +0,0 @@
+-package headfirst.designpatterns.builder.pizza;
+-
+-public class PizzaDirector {
+- 
+-	// Fluent Interface pattern (return the builder each time so we can string the calls together)
+-	// Builder pattern (we have two different builders so the "same construction process can create
+-	//   different representations").
+-	// Builder is a solution to the telescoping constructor anti-pattern, where we have multiple,
+-	//   complex constructor methods with various args for all various combinations of options
+-	//   in construction options. 
+-	
+-	// in this example main() is the construct() method
+-	public static void main(String[] args) {
+-		// Could hand builders to PizzaStore which would take the customer's order,
+-		//   and call appropriate methods for each topping, then call the
+-		//   pizza methods to prep and return to the customer. 
+-		PizzaBuilder veggieBuilder = new VeggieLoversPizzaBuilder();
+-		// The PizzaDirector calls the methods in the correct order to
+-		// build a veggiePizza. 
+-		Pizza veggie = veggieBuilder.addSauce().addCheese().addOlives().addTomatoes().addSausage().build();
+-		veggie.prepare();
+-		veggie.bake();
+-		veggie.cut();
+-		veggie.box();
+-		System.out.println(veggie);
+-		
+-		PizzaBuilder meatBuilder = new MeatLoversPizzaBuilder();
+-		// The PizzaDirector calls the methods in the correct order to build
+-		// a meat lovers Pizza
+-		Pizza meat = meatBuilder.addSauce().addTomatoes().addCheese().addSausage().addPepperoni().build();
+-		meat.prepare();
+-		meat.bake();
+-		meat.cut();
+-		meat.box();
+-		System.out.println(meat);
+-		
+-		// There is some difference of opinion about StringBuilder and whether it's using
+-		// the Builder pattern or not. Some say yes, some say no.
+-		// StringBuilder does not provide an abstract API with multiple subclasses for
+-		//   creating different representations (variations). So, strictly, no, it doesn't 
+-		//   use the Builder Pattern, but rather the Fluent Interface Pattern.
+-		StringBuilder sb = new StringBuilder();
+-		sb.append("\nTesting String Builder\n").append(veggie).insert(0, "====");
+-		System.out.println("Length of the String Builder: " + sb.length()); 
+-		System.out.println("Result of the String Builder: " + sb.toString());
+-		
+-		String sb2 = new StringBuilder().append("\nTesting String Builder\n").append(meat).insert(0, "====").toString();
+-		System.out.println(sb2);
+-		
+-		// Builder has similarities to Abstract Factory.
+-		// But difference is that Builder provides a step by step API for building a product;
+-		//   the client is responsible for calling the steps, and those can vary in order, etc.
+-		//   With Builder, the client must have more knowledge of the details of the product being built.
+-		// Product implementations can be swapped for others; clients don't change because the use the abstract API.
+-	}
+-}
+diff --git a/src/headfirst/designpatterns/builder/pizza/VeggiePizzaBuilder.java b/src/headfirst/designpatterns/builder/pizza/VeggiePizzaBuilder.java
+deleted file mode 100644
+index fbbd03a..0000000
+--- a/src/headfirst/designpatterns/builder/pizza/VeggiePizzaBuilder.java
++++ /dev/null
+@@ -1,41 +0,0 @@
+-package headfirst.designpatterns.builder.pizza;
+-
+-public class VeggieLoversPizzaBuilder extends PizzaBuilder {
+-	public VeggieLoversPizzaBuilder() {
+-		this.name = "Veggie Lovers Pizza";
+-	}
+-	public PizzaBuilder addCheese() {
+-		// veggie lovers like parm
+-		this.toppings.add("parmesan");
+-		return this;
+-	}
+-	public PizzaBuilder addSauce() {
+-		this.toppings.add("sauce");
+-		return this;
+-	}
+-	public PizzaBuilder addTomatoes() {
+-		this.toppings.add("chopped tomatoes");
+-		return this;
+-	}
+-	public PizzaBuilder addGarlic() {
+-		this.toppings.add("garlic");
+-		return this;
+-	}
+-	public PizzaBuilder addOlives() {
+-		this.toppings.add("green olives");
+-		return this;
+-	}
+-	public PizzaBuilder addSpinach() {
+-		this.toppings.add("spinach");
+-		return this;
+-	}
+-	public PizzaBuilder addPepperoni() {
+-		// never EVER add Pepperoni to veggie lovers pizza
+-		return this;
+-	}
+-	public PizzaBuilder addSausage() {
+-		// never EVER add Sausage to veggie lovers pizza
+-		return this;
+-	}
+-	
+-}
+\ No newline at end of file
+diff --git a/src/headfirst/designpatterns/combined/djview/BPMObserver.java b/src/headfirst/designpatterns/combined/djview/BPMObserver.java
+deleted file mode 100755
+index 2b24276..0000000
+--- a/src/headfirst/designpatterns/combined/djview/BPMObserver.java
++++ /dev/null
+@@ -1,5 +0,0 @@
+-package headfirst.designpatterns.combined.djview;
+-  
+-public interface BPMObserver {
+-	void updateBPM();
+-}
+diff --git a/src/headfirst/designpatterns/combined/djview/BeatBar.java b/src/headfirst/designpatterns/combined/djview/BeatBar.java
+deleted file mode 100755
+index d0eae65..0000000
+--- a/src/headfirst/designpatterns/combined/djview/BeatBar.java
++++ /dev/null
+@@ -1,27 +0,0 @@
+-package headfirst.designpatterns.combined.djview;
+-  
+-import javax.swing.*;
+-
+-public class BeatBar extends JProgressBar implements Runnable { 
+-	private static final long serialVersionUID = 2L;
+-    JProgressBar progressBar;
+-	Thread thread;
+-
+-	public BeatBar() {
+-		thread = new Thread(this);
+-		setMaximum(100);
+-		thread.start();
+-	}
+-
+-	public void run() {
+-		for(;;) {
+-			int value = getValue();
+-			value = (int)(value * .75);
+-			setValue(value);
+-			repaint();
+-			try {
+-				Thread.sleep(50);
+-			} catch (Exception e) {};
+-		}
+-	}
+-}
+diff --git a/src/headfirst/designpatterns/combined/djview/BeatController.java b/src/headfirst/designpatterns/combined/djview/BeatController.java
+deleted file mode 100755
+index bf48620..0000000
+--- a/src/headfirst/designpatterns/combined/djview/BeatController.java
++++ /dev/null
+@@ -1,42 +0,0 @@
+-package headfirst.designpatterns.combined.djview;
+-  
+-public class BeatController implements ControllerInterface {
+-	BeatModelInterface model;
+-	DJView view;
+-   
+-	public BeatController(BeatModelInterface model) {
+-		this.model = model;
+-		view = new DJView(this, model);
+-        view.createView();
+-        view.createControls();
+-		view.disableStopMenuItem();
+-		view.enableStartMenuItem();
+-		model.initialize();
+-	}
+-  
+-	public void start() {
+-		model.on();
+-		view.disableStartMenuItem();
+-		view.enableStopMenuItem();
+-	}
+-  
+-	public void stop() {
+-		model.off();
+-		view.disableStopMenuItem();
+-		view.enableStartMenuItem();
+-	}
+-    
+-	public void increaseBPM() {
+-        int bpm = model.getBPM();
+-        model.setBPM(bpm + 1);
+-	}
+-    
+-	public void decreaseBPM() {
+-        int bpm = model.getBPM();
+-        model.setBPM(bpm - 1);
+-  	}
+-  
+- 	public void setBPM(int bpm) {
+-		model.setBPM(bpm);
+-	}
+-}
+diff --git a/src/headfirst/designpatterns/combined/djview/BeatModel.java b/src/headfirst/designpatterns/combined/djview/BeatModel.java
+deleted file mode 100755
+index f2032d6..0000000
+--- a/src/headfirst/designpatterns/combined/djview/BeatModel.java
++++ /dev/null
+@@ -1,107 +0,0 @@
+-package headfirst.designpatterns.combined.djview;
+-
+-import java.util.*;
+-import javax.sound.sampled.AudioSystem;
+-import javax.sound.sampled.Clip;
+-import java.io.*;
+-import javax.sound.sampled.Line;
+-
+-public class BeatModel implements BeatModelInterface, Runnable {
+-	List<BeatObserver> beatObservers = new ArrayList<BeatObserver>();
+-	List<BPMObserver> bpmObservers = new ArrayList<BPMObserver>();
+-	int bpm = 90;
+-	Thread thread;
+-	boolean stop = false;
+-	Clip clip;
+-
+-	public void initialize() {
+-		try {
+-			File resource = new File("clap.wav");
+-			clip = (Clip) AudioSystem.getLine(new Line.Info(Clip.class));
+-			clip.open(AudioSystem.getAudioInputStream(resource));
+-		}
+-		catch(Exception ex) {
+-			System.out.println("Error: Can't load clip");
+-			System.out.println(ex);
+-		}
+-	}
+-
+-	public void on() {
+-		bpm = 90;
+-		//notifyBPMObservers();
+-		thread = new Thread(this);
+-		stop = false;
+-		thread.start();
+-	}
+-
+-	public void off() {
+-		stopBeat();
+-		stop = true;
+-	}
+-
+-	public void run() {
+-		while (!stop) {
+-			playBeat();
+-			notifyBeatObservers();
+-			try {
+-				Thread.sleep(60000/getBPM());
+-			} catch (Exception e) {}
+-		}
+-	}
+-
+-	public void setBPM(int bpm) {
+-		this.bpm = bpm;
+-		notifyBPMObservers();
+-	}
+-
+-	public int getBPM() {
+-		return bpm;
+-	}
+-
+-	public void registerObserver(BeatObserver o) {
+-		beatObservers.add(o);
+-	}
+-
+-	public void notifyBeatObservers() {
+-		for(int i = 0; i < beatObservers.size(); i++) {
+-			BeatObserver observer = (BeatObserver)beatObservers.get(i);
+-			observer.updateBeat();
+-		}
+-	}
+-
+-	public void registerObserver(BPMObserver o) {
+-		bpmObservers.add(o);
+-	}
+-
+-	public void notifyBPMObservers() {
+-		for(int i = 0; i < bpmObservers.size(); i++) {
+-			BPMObserver observer = (BPMObserver)bpmObservers.get(i);
+-			observer.updateBPM();
+-		}
+-	}
+-
+-	public void removeObserver(BeatObserver o) {
+-		int i = beatObservers.indexOf(o);
+-		if (i >= 0) {
+-			beatObservers.remove(i);
+-		}
+-	}
+-
+-	public void removeObserver(BPMObserver o) {
+-		int i = bpmObservers.indexOf(o);
+-		if (i >= 0) {
+-			bpmObservers.remove(i);
+-		}
+-	}
+-
+-	public void playBeat() {
+-		clip.setFramePosition(0);
+-		clip.start();
+-	}
+-	public void stopBeat() {
+-		clip.setFramePosition(0);
+-		clip.stop();
+-	}
+-
+-}
+-
+diff --git a/src/headfirst/designpatterns/combined/djview/BeatModelInterface.java b/src/headfirst/designpatterns/combined/djview/BeatModelInterface.java
+deleted file mode 100755
+index 72f194a..0000000
+--- a/src/headfirst/designpatterns/combined/djview/BeatModelInterface.java
++++ /dev/null
+@@ -1,21 +0,0 @@
+-package headfirst.designpatterns.combined.djview;
+-  
+-public interface BeatModelInterface {
+-	void initialize();
+-  
+-	void on();
+-  
+-	void off();
+-  
+-    void setBPM(int bpm);
+-  
+-	int getBPM();
+-  
+-	void registerObserver(BeatObserver o);
+-  
+-	void removeObserver(BeatObserver o);
+-  
+-	void registerObserver(BPMObserver o);
+-  
+-	void removeObserver(BPMObserver o);
+-}
+diff --git a/src/headfirst/designpatterns/combined/djview/BeatObserver.java b/src/headfirst/designpatterns/combined/djview/BeatObserver.java
+deleted file mode 100755
+index 9571e80..0000000
+--- a/src/headfirst/designpatterns/combined/djview/BeatObserver.java
++++ /dev/null
+@@ -1,5 +0,0 @@
+-package headfirst.designpatterns.combined.djview;
+-  
+-public interface BeatObserver {
+-	void updateBeat();
+-}
+diff --git a/src/headfirst/designpatterns/combined/djview/ControllerInterface.java b/src/headfirst/designpatterns/combined/djview/ControllerInterface.java
+deleted file mode 100755
+index 30e97f6..0000000
+--- a/src/headfirst/designpatterns/combined/djview/ControllerInterface.java
++++ /dev/null
+@@ -1,9 +0,0 @@
+-package headfirst.designpatterns.combined.djview;
+-  
+-public interface ControllerInterface {
+-	void start();
+-	void stop();
+-	void increaseBPM();
+-	void decreaseBPM();
+- 	void setBPM(int bpm);
+-}
+diff --git a/src/headfirst/designpatterns/combined/djview/DJTestDrive.java b/src/headfirst/designpatterns/combined/djview/DJTestDrive.java
+deleted file mode 100755
+index 7550c6d..0000000
+--- a/src/headfirst/designpatterns/combined/djview/DJTestDrive.java
++++ /dev/null
+@@ -1,9 +0,0 @@
+-package headfirst.designpatterns.combined.djview;
+-  
+-public class DJTestDrive {
+-
+-    public static void main (String[] args) {
+-        BeatModelInterface model = new BeatModel();
+-		ControllerInterface controller = new BeatController(model);
+-    }
+-}
+diff --git a/src/headfirst/designpatterns/combined/djview/DJView.java b/src/headfirst/designpatterns/combined/djview/DJView.java
+deleted file mode 100755
+index 2039169..0000000
+--- a/src/headfirst/designpatterns/combined/djview/DJView.java
++++ /dev/null
+@@ -1,187 +0,0 @@
+-package headfirst.designpatterns.combined.djview;
+-    
+-import java.awt.*;
+-import java.awt.event.*;
+-import javax.swing.*;
+-
+-public class DJView implements ActionListener,  BeatObserver, BPMObserver {
+-	BeatModelInterface model;
+-	ControllerInterface controller;
+-    JFrame viewFrame;
+-    JPanel viewPanel;
+-	BeatBar beatBar;
+-	JLabel bpmOutputLabel;
+-    JFrame controlFrame;
+-    JPanel controlPanel;
+-    JLabel bpmLabel;
+-    JTextField bpmTextField;
+-    JButton setBPMButton;
+-    JButton increaseBPMButton;
+-    JButton decreaseBPMButton;
+-    JMenuBar menuBar;
+-    JMenu menu;
+-    JMenuItem startMenuItem;
+-    JMenuItem stopMenuItem;
+-
+-    public DJView(ControllerInterface controller, BeatModelInterface model) {	
+-		this.controller = controller;
+-		this.model = model;
+-		model.registerObserver((BeatObserver)this);
+-		model.registerObserver((BPMObserver)this);
+-    }
+-    
+-    public void createView() {
+-		// Create all Swing components here
+-        viewPanel = new JPanel(new GridLayout(1, 2));
+-        viewFrame = new JFrame("View");
+-        viewFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+-        viewFrame.setSize(new Dimension(100, 80));
+-        bpmOutputLabel = new JLabel("offline", SwingConstants.CENTER);
+-		beatBar = new BeatBar();
+-		beatBar.setValue(0);
+-        JPanel bpmPanel = new JPanel(new GridLayout(2, 1));
+-		bpmPanel.add(beatBar);
+-        bpmPanel.add(bpmOutputLabel);
+-        viewPanel.add(bpmPanel);
+-        viewFrame.getContentPane().add(viewPanel, BorderLayout.CENTER);
+-        viewFrame.pack();
+-        viewFrame.setVisible(true);
+-	}
+-  
+-  
+-    public void createControls() {
+-		// Create all Swing components here
+-        JFrame.setDefaultLookAndFeelDecorated(true);
+-        controlFrame = new JFrame("Control");
+-        controlFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+-        controlFrame.setSize(new Dimension(100, 80));
+-
+-        controlPanel = new JPanel(new GridLayout(1, 2));
+-
+-        menuBar = new JMenuBar();
+-        menu = new JMenu("DJ Control");
+-        startMenuItem = new JMenuItem("Start");
+-        menu.add(startMenuItem);
+-        startMenuItem.addActionListener((event) -> controller.start());
+-        // was....
+-        /*
+-        startMenuItem.addActionListener(new ActionListener() {
+-            public void actionPerformed(ActionEvent event) {
+-                controller.start();
+-            }
+-        });
+-        */
+-        stopMenuItem = new JMenuItem("Stop");
+-        menu.add(stopMenuItem); 
+-        stopMenuItem.addActionListener((event) -> controller.stop());
+-        // was...
+-        /*
+-        stopMenuItem.addActionListener(new ActionListener() {
+-            public void actionPerformed(ActionEvent event) {
+-                controller.stop();
+-            }
+-        });
+-        */
+-        JMenuItem exit = new JMenuItem("Quit");
+-        exit.addActionListener((event) -> System.exit(0));
+-        // was...
+-        /*
+-        exit.addActionListener(new ActionListener() {
+-            public void actionPerformed(ActionEvent event) {
+-                System.exit(0);
+-            }
+-        });
+-        */
+-
+-        menu.add(exit);
+-        menuBar.add(menu);
+-        controlFrame.setJMenuBar(menuBar);
+-
+-        bpmTextField = new JTextField(2);
+-        bpmLabel = new JLabel("Enter BPM:", SwingConstants.RIGHT);
+-        setBPMButton = new JButton("Set");
+-        setBPMButton.setSize(new Dimension(10,40));
+-        increaseBPMButton = new JButton(">>");
+-        decreaseBPMButton = new JButton("<<");
+-        setBPMButton.addActionListener(this);
+-        increaseBPMButton.addActionListener(this);
+-        decreaseBPMButton.addActionListener(this);
+-
+-        JPanel buttonPanel = new JPanel(new GridLayout(1, 2));
+-
+-		buttonPanel.add(decreaseBPMButton);
+-		buttonPanel.add(increaseBPMButton);
+-
+-        JPanel enterPanel = new JPanel(new GridLayout(1, 2));
+-        enterPanel.add(bpmLabel);
+-        enterPanel.add(bpmTextField);
+-        JPanel insideControlPanel = new JPanel(new GridLayout(3, 1));
+-        insideControlPanel.add(enterPanel);
+-        insideControlPanel.add(setBPMButton);
+-        insideControlPanel.add(buttonPanel);
+-        controlPanel.add(insideControlPanel);
+-        
+-        bpmLabel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
+-        bpmOutputLabel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
+-
+-        controlFrame.getRootPane().setDefaultButton(setBPMButton);
+-        controlFrame.getContentPane().add(controlPanel, BorderLayout.CENTER);
+-
+-        controlFrame.pack();
+-        controlFrame.setVisible(true);
+-    }
+-
+-	public void enableStopMenuItem() {
+-    	stopMenuItem.setEnabled(true);
+-	}
+-
+-	public void disableStopMenuItem() {
+-    	stopMenuItem.setEnabled(false);
+-	}
+-
+-	public void enableStartMenuItem() {
+-    	startMenuItem.setEnabled(true);
+-	}
+-
+-	public void disableStartMenuItem() {
+-    	startMenuItem.setEnabled(false);
+-	}
+-
+-    public void actionPerformed(ActionEvent event) {
+-		if (event.getSource() == setBPMButton) {
+-			int bpm = 90;
+-			String bpmText = bpmTextField.getText();
+-			if (bpmText == null || bpmText.contentEquals("")) {
+-				bpm = 90;
+-			} else {
+-				bpm = Integer.parseInt(bpmTextField.getText());
+-			}
+-        	controller.setBPM(bpm);
+-		} else if (event.getSource() == increaseBPMButton) {
+-			controller.increaseBPM();
+-		} else if (event.getSource() == decreaseBPMButton) {
+-			controller.decreaseBPM();
+-		}
+-    }
+-
+-	public void updateBPM() {
+-		if (model != null) {
+-			int bpm = model.getBPM();
+-			if (bpm == 0) {
+-				if (bpmOutputLabel != null) {
+-        			bpmOutputLabel.setText("offline");
+-				}
+-			} else {
+-				if (bpmOutputLabel != null) {
+-        			bpmOutputLabel.setText("Current BPM: " + model.getBPM());
+-				}
+-			}
+-		}
+-	}
+-  
+-	public void updateBeat() {
+-		if (beatBar != null) {
+-			 beatBar.setValue(100);
+-		}
+-	}
+-}
+diff --git a/src/headfirst/designpatterns/combined/djview/DJViewHttpHandler.java b/src/headfirst/designpatterns/combined/djview/DJViewHttpHandler.java
+deleted file mode 100644
+index 316f1c6..0000000
+--- a/src/headfirst/designpatterns/combined/djview/DJViewHttpHandler.java
++++ /dev/null
+@@ -1,101 +0,0 @@
+-package headfirst.designpatterns.combined.djview;
+-
+-import java.io.IOException;
+-import java.io.OutputStream;
+-import java.io.UnsupportedEncodingException;
+-import java.net.URLDecoder;
+-import java.util.Arrays;
+-import java.util.HashMap;
+-import java.util.Map;
+-
+-import com.sun.net.httpserver.*;
+-
+-// Controller for the DJ Web View
+-// Takes actions from the view and translates them to actions on the model
+-// View has no interaction to the model
+-// Using the exact same model, BeatModel, as we used with the DJView and BeatContoller 
+-public class DJViewHttpHandler  implements HttpHandler {
+-	BeatModel beatModel;
+-	Map<String, String> queryPairs;
+-	
+-	public DJViewHttpHandler(BeatModel beatModel) {
+-		this.beatModel = beatModel;
+-	}
+-	public void handle(HttpExchange httpExchange) throws IOException {
+-		String uri = httpExchange.getRequestURI().toString();
+-		System.out.println("URI: " + uri);
+-		String[] params = uri.split("\\?");
+-		String queryStrings = "";
+-		if (params.length > 1) {
+-			queryStrings = params[1];
+-		}
+-		
+-		boolean noAction = true;
+-		try {
+-			queryPairs = this.splitQuery(queryStrings);
+-			noAction = false;
+-		} catch (Exception e) {
+-			System.out.println("Error splitting query: " + e.getMessage());
+-		}
+-		System.out.println("Query pairs: " + queryPairs);
+-		
+-		if (!noAction) {
+-			String bpm = this.getParameter("bpm");
+-			if (bpm == null) {
+-				bpm = beatModel.getBPM() + "";
+-			}
+-			String set = this.getParameter("set");
+-			if (set != null) {
+-				int bpmNumber = 90;
+-				bpmNumber = Integer.parseInt(bpm);
+-				beatModel.setBPM(bpmNumber);
+-			}
+-			String decrease = this.getParameter("decrease");
+-			if (decrease != null) {
+-				beatModel.setBPM(beatModel.getBPM() - 1);
+-			}
+-			String increase = this.getParameter("increase");
+-			if (increase != null) {
+-				beatModel.setBPM(beatModel.getBPM() + 1);
+-			}
+-			String on = this.getParameter("on");
+-			if (on != null) {
+-				beatModel.on();
+-			}
+-			String off = this.getParameter("off");
+-			if (off != null) {
+-				beatModel.off();
+-			}
+-		}
+-		
+-		// allow access from web server other than 8080
+-		Headers headers = httpExchange.getResponseHeaders();
+-		headers.add("Access-Control-Allow-Origin","*");
+-		
+-		OutputStream outputStream = httpExchange.getResponseBody();
+-		StringBuilder responseStringBuilder = new StringBuilder();
+-		responseStringBuilder.append(beatModel.getBPM());
+-		System.out.println("BPM: " + beatModel.getBPM());
+-
+-		String responseString = responseStringBuilder.toString();
+-		httpExchange.sendResponseHeaders(200, responseString.length());
+-		outputStream.write(responseString.getBytes());
+-		outputStream.flush();
+-		outputStream.close();
+-	}
+-	
+-	Map<String, String> splitQuery(String query) throws UnsupportedEncodingException {
+-		Map<String, String> query_pairs = new HashMap<String, String>();
+-	    String[] pairs = query.split("&");
+-	    for (String pair : pairs) {
+-	        int idx = pair.indexOf("=");
+-	        query_pairs.put(URLDecoder.decode(pair.substring(0, idx), "UTF-8"), URLDecoder.decode(pair.substring(idx + 1), "UTF-8"));
+-	    }
+-	    return query_pairs;
+-	}
+-	
+-	// bpm, set, decrease, increase, on, off
+-	String getParameter(String param) {
+-		return queryPairs.get(param);
+-	}
+-}
+diff --git a/src/headfirst/designpatterns/combined/djview/DJViewHttpServer.java b/src/headfirst/designpatterns/combined/djview/DJViewHttpServer.java
+deleted file mode 100755
+index c97bd25..0000000
+--- a/src/headfirst/designpatterns/combined/djview/DJViewHttpServer.java
++++ /dev/null
+@@ -1,26 +0,0 @@
+-package headfirst.designpatterns.combined.djview;
+-
+-import com.sun.net.httpserver.HttpServer;
+-import java.net.InetSocketAddress;
+-
+-public class DJViewHttpServer {
+- 
+-	public static void main(String[] args) {
+-		
+-		try {
+-			System.out.println("DJView Http Server Running");
+-			
+-			BeatModel beatModel = new BeatModel();
+-			beatModel.initialize();
+-			// create a server on port 8080, with a backlog queue allowed of size 0 (ie, no queue)
+-			// most people will already have a web server running on 80, so we're using 8080
+-			HttpServer server = HttpServer.create(new InetSocketAddress("localhost", 8080), 0);
+-			server.createContext("/djview", new DJViewHttpHandler(beatModel));
+-			server.start();
+-			System.out.println("DJView Server is running at http://localhost:8080/djview");
+-			
+-		} catch (Exception e) {
+-			e.printStackTrace();
+-		}
+-	}
+-}
+diff --git a/src/headfirst/designpatterns/combined/djview/DJViewServlet.java b/src/headfirst/designpatterns/combined/djview/DJViewServlet.java
+deleted file mode 100644
+index 91c3791..0000000
+--- a/src/headfirst/designpatterns/combined/djview/DJViewServlet.java
++++ /dev/null
+@@ -1,77 +0,0 @@
+-// This code is from Head First Design Patterns first edition
+-// and has been removed from the second edition.
+-//
+-// Left here for those with the first edition, but no guarantees it 
+-// will work.
+-//
+-// 9/15/2020
+-//
+-package headfirst.designpatterns.combined.djview;
+-
+-import javax.servlet.*;
+-import javax.servlet.http.*;
+-import java.io.*;
+-
+-public class DJViewServlet extends HttpServlet {
+-
+-	private static final long serialVersionUID = 2L;
+-
+-	public void init() throws ServletException {
+-		BeatModel beatModel = new BeatModel();
+-		beatModel.initialize();
+-		getServletContext().setAttribute("beatModel", beatModel);
+-	}
+-
+-	public void doGet(HttpServletRequest request,
+-			HttpServletResponse response)
+-					throws IOException, ServletException
+-	{
+-		doPost(request, response);
+-	}
+-
+-	public void doPost(HttpServletRequest request,
+-			HttpServletResponse response)
+-					throws IOException, ServletException
+-	{
+-		BeatModel beatModel = 
+-				(BeatModel)getServletContext().getAttribute("beatModel");
+-
+-		String bpm = request.getParameter("bpm");
+-		if (bpm == null) {
+-			bpm = beatModel.getBPM() + "";
+-		}
+-
+-		String set = request.getParameter("set");
+-		if (set != null) {
+-			int bpmNumber = 90;
+-			bpmNumber = Integer.parseInt(bpm);
+-			beatModel.setBPM(bpmNumber);
+-		}
+-
+-		String decrease = request.getParameter("decrease");
+-		if (decrease != null) {
+-			beatModel.setBPM(beatModel.getBPM() - 1);
+-		}
+-		String increase = request.getParameter("increase");
+-		if (increase != null) {
+-			beatModel.setBPM(beatModel.getBPM() + 1);
+-		}
+-		String on = request.getParameter("on");
+-		if (on != null) {
+-			beatModel.on();
+-		}
+-		String off = request.getParameter("off");
+-		if (off != null) {
+-			beatModel.off();
+-		}
+-
+-		request.setAttribute("beatModel", beatModel);
+-
+-		RequestDispatcher dispatcher = 
+-				request.getRequestDispatcher("/djview.jsp");
+-		dispatcher.forward(request, response);
+-
+-	}
+-
+-
+-}
+diff --git a/src/headfirst/designpatterns/combined/djview/HeartAdapter.java b/src/headfirst/designpatterns/combined/djview/HeartAdapter.java
+deleted file mode 100755
+index 3333edc..0000000
+--- a/src/headfirst/designpatterns/combined/djview/HeartAdapter.java
++++ /dev/null
+@@ -1,37 +0,0 @@
+-package headfirst.designpatterns.combined.djview;
+-
+-public class HeartAdapter implements BeatModelInterface {
+-	HeartModelInterface heart;
+- 
+-	public HeartAdapter(HeartModelInterface heart) {
+-		this.heart = heart;
+-	}
+-
+-    public void initialize() {}
+-  
+-    public void on() {}
+-  
+-    public void off() {}
+-   
+-	public int getBPM() {
+-		return heart.getHeartRate();
+-	}
+-  
+-    public void setBPM(int bpm) {}
+-   
+-	public void registerObserver(BeatObserver o) {
+-		heart.registerObserver(o);
+-	}
+-    
+-	public void removeObserver(BeatObserver o) {
+-		heart.removeObserver(o);
+-	}
+-     
+-	public void registerObserver(BPMObserver o) {
+-		heart.registerObserver(o);
+-	}
+-  
+-	public void removeObserver(BPMObserver o) {
+-		heart.removeObserver(o);
+-	}
+-}
+diff --git a/src/headfirst/designpatterns/combined/djview/HeartController.java b/src/headfirst/designpatterns/combined/djview/HeartController.java
+deleted file mode 100755
+index 97a855c..0000000
+--- a/src/headfirst/designpatterns/combined/djview/HeartController.java
++++ /dev/null
+@@ -1,28 +0,0 @@
+-package headfirst.designpatterns.combined.djview;
+-  
+-public class HeartController implements ControllerInterface {
+-	HeartModelInterface model;
+-	DJView view;
+-  
+-	public HeartController(HeartModelInterface model) {
+-		this.model = model;
+-		view = new DJView(this, new HeartAdapter(model));
+-        view.createView();
+-        view.createControls();
+-		view.disableStopMenuItem();
+-		view.disableStartMenuItem();
+-	}
+-  
+-	public void start() {}
+- 
+-	public void stop() {}
+-    
+-	public void increaseBPM() {}
+-    
+-	public void decreaseBPM() {}
+-  
+- 	public void setBPM(int bpm) {}
+-}
+-
+-
+-
+diff --git a/src/headfirst/designpatterns/combined/djview/HeartModel.java b/src/headfirst/designpatterns/combined/djview/HeartModel.java
+deleted file mode 100755
+index 9791b83..0000000
+--- a/src/headfirst/designpatterns/combined/djview/HeartModel.java
++++ /dev/null
+@@ -1,79 +0,0 @@
+-package headfirst.designpatterns.combined.djview;
+-
+-import java.util.*;
+-
+-public class HeartModel implements HeartModelInterface, Runnable {
+-	ArrayList<BeatObserver> beatObservers = new ArrayList<BeatObserver>();
+-	ArrayList<BPMObserver> bpmObservers = new ArrayList<BPMObserver>();
+-	int time = 1000;
+-    int bpm = 90;
+-	Random random = new Random(System.currentTimeMillis());
+-	Thread thread;
+-
+-	public HeartModel() {
+-		thread = new Thread(this);
+-		thread.start();
+-	}
+-
+-	public void run() {
+-		int lastrate = -1;
+-
+-		for(;;) {
+-			int change = random.nextInt(10);
+-			if (random.nextInt(2) == 0) {
+-				change = 0 - change;
+-			}
+-			int rate = 60000/(time + change);
+-			if (rate < 120 && rate > 50) {
+-				time += change;
+-				notifyBeatObservers();
+-				if (rate != lastrate) {
+-					lastrate = rate;
+-					notifyBPMObservers();
+-				}
+-			}
+-			try {
+-				Thread.sleep(time);
+-			} catch (Exception e) {}
+-		}
+-	}
+-	public int getHeartRate() {
+-		return 60000/time;
+-	}
+-
+-	public void registerObserver(BeatObserver o) {
+-		beatObservers.add(o);
+-	}
+-
+-	public void removeObserver(BeatObserver o) {
+-		int i = beatObservers.indexOf(o);
+-		if (i >= 0) {
+-			beatObservers.remove(i);
+-		}
+-	}
+-
+-	public void notifyBeatObservers() {
+-		for(int i = 0; i < beatObservers.size(); i++) {
+-			BeatObserver observer = (BeatObserver)beatObservers.get(i);
+-			observer.updateBeat();
+-		}
+-	}
+-
+-	public void registerObserver(BPMObserver o) {
+-		bpmObservers.add(o);
+-	}
+-
+-	public void removeObserver(BPMObserver o) {
+-		int i = bpmObservers.indexOf(o);
+-		if (i >= 0) {
+-			bpmObservers.remove(i);
+-		}
+-	}
+-
+-	public void notifyBPMObservers() {
+-		for(int i = 0; i < bpmObservers.size(); i++) {
+-			BPMObserver observer = (BPMObserver)bpmObservers.get(i);
+-			observer.updateBPM();
+-		}
+-	}
+-}
+diff --git a/src/headfirst/designpatterns/combined/djview/HeartModelInterface.java b/src/headfirst/designpatterns/combined/djview/HeartModelInterface.java
+deleted file mode 100755
+index 65d76dc..0000000
+--- a/src/headfirst/designpatterns/combined/djview/HeartModelInterface.java
++++ /dev/null
+@@ -1,9 +0,0 @@
+-package headfirst.designpatterns.combined.djview;
+-
+-public interface HeartModelInterface {
+-	int getHeartRate();
+-	void registerObserver(BeatObserver o);
+-	void removeObserver(BeatObserver o);
+-	void registerObserver(BPMObserver o);
+-	void removeObserver(BPMObserver o);
+-}
+diff --git a/src/headfirst/designpatterns/combined/djview/HeartTestDrive.java b/src/headfirst/designpatterns/combined/djview/HeartTestDrive.java
+deleted file mode 100755
+index b3099d1..0000000
+--- a/src/headfirst/designpatterns/combined/djview/HeartTestDrive.java
++++ /dev/null
+@@ -1,9 +0,0 @@
+-package headfirst.designpatterns.combined.djview;
+-  
+-public class HeartTestDrive {
+-
+-    public static void main (String[] args) {
+-		HeartModel heartModel = new HeartModel();
+-        ControllerInterface model = new HeartController(heartModel);
+-    }
+-}
+diff --git a/src/headfirst/designpatterns/combined/djview/README.md b/src/headfirst/designpatterns/combined/djview/README.md
+deleted file mode 100644
+index 32224a8..0000000
+--- a/src/headfirst/designpatterns/combined/djview/README.md
++++ /dev/null
+@@ -1,66 +0,0 @@
+-# The Servlet code has been removed from 
+-# Head First Design Patterns 2nd edition
+-#
+-# No guarantees that it will work.
+-#
+-# 9/15/2020
+-#
+-# To run the DJView Servlet on localhost
+-
+-1. Download Tomcat: http://tomcat.apache.org/index.html
+-Place the folder (apache-tomcat-VERSION) in a folder somewhere.
+-The instructions below refer to this folder as the "tomcat" folder.
+-
+-2. Build the code and note where the binary files are generated (in the 
+-bin/ directory in your project directory).
+-
+-3. In Eclipse, add the servlet and jsp jars:
+-   * lib/servlet-api-3.1.jar
+-   * lib/jsp/javax.servlet.jsp-2.3.2.jar
+-
+-4. From tomcat folder, run:
+-   * bin/startup.sh
+-
+-5. Navigate to localhost:8080 in your browser; if you see a page, Tomcat is running!
+-
+-6. Under tomcat/webapps make a new folder, djview/
+-
+-7. Copy the jsp/index.html file and the jsp/djview.jsp file there.
+-
+-8. Make a new folder in the tomcat/webapps/djview/ folder named "WEB-INF".
+-
+-9. Place a copy of the jsp/web.xml file there. This file maps the Servlet class to a URL 
+-for the form post/get in index.html
+-
+-10. Create a set of folders that create the path: 
+-tomcat/webapps/djview/WEB-INF/classes/headfirst/designpatterns/combined/djview/
+-
+-11. Copy the following classes from headfirst/designpatterns/combined/djview/ to the 
+-tomcat/webapps/djview/WEB-INF/classes/headfirst/designpatterns/combined/djview/ 
+-folder:
+-   * BeatModel.class 
+-   * BeatModelInterface.class 
+-   * BeatController.class
+-   * BeatObserver.class
+-   * BPMObserver.class
+-   * ControllerInterface.class
+-   * DJViewServlet.class 
+-
+-12. Restart tomcat from the top tomcat folder:
+-   * bin/shutdown.sh
+-   * bin/startup.sh
+-
+-13. Navigate to localhost:8080/djview/djview.jsp
+-
+-
+-NEW
+-Don't need tomcat.
+-Run DJViewHttpServer, this will run the server on port 8080.
+-CORS disabled so requests can come from different servers.
+-Client:
+-run HFDP/dj/dj.html from local web server (port 80 usually).
+-
+-
+-
+-
+-
+diff --git a/src/headfirst/designpatterns/combined/djview/jsp/WEB-INF/web.xml b/src/headfirst/designpatterns/combined/djview/jsp/WEB-INF/web.xml
+deleted file mode 100644
+index 008a4b4..0000000
+--- a/src/headfirst/designpatterns/combined/djview/jsp/WEB-INF/web.xml
++++ /dev/null
+@@ -1,40 +0,0 @@
+-<?xml version="1.0" encoding="ISO-8859-1"?>
+-<!--
+-  Licensed to the Apache Software Foundation (ASF) under one or more
+-  contributor license agreements.  See the NOTICE file distributed with
+-  this work for additional information regarding copyright ownership.
+-  The ASF licenses this file to You under the Apache License, Version 2.0
+-  (the "License"); you may not use this file except in compliance with
+-  the License.  You may obtain a copy of the License at
+-
+-      http://www.apache.org/licenses/LICENSE-2.0
+-
+-  Unless required by applicable law or agreed to in writing, software
+-  distributed under the License is distributed on an "AS IS" BASIS,
+-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  See the License for the specific language governing permissions and
+-  limitations under the License.
+--->
+-<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+-  xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+-                      http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+-  version="3.0"
+-  metadata-complete="true">
+-
+-    <description>
+-      DJView Servlet Application
+-    </description>
+-    <display-name>DJView Servlet Application</display-name>
+-
+-    <servlet>
+-      <servlet-name>DJViewServlet</servlet-name>
+-      <servlet-class>headfirst.designpatterns.combined.djview.DJViewServlet</servlet-class>
+-    </servlet>
+-
+-    <servlet-mapping>
+-        <servlet-name>DJViewServlet</servlet-name>
+-        <url-pattern>/servlet/DJViewServlet</url-pattern>
+-    </servlet-mapping>
+-
+-</web-app>
+diff --git a/src/headfirst/designpatterns/combined/djview/jsp/djview.jsp b/src/headfirst/designpatterns/combined/djview/jsp/djview.jsp
+deleted file mode 100644
+index be85a5b..0000000
+--- a/src/headfirst/designpatterns/combined/djview/jsp/djview.jsp
++++ /dev/null
+@@ -1,29 +0,0 @@
+-<jsp:useBean id="beatModel" scope="request" class="headfirst.designpatterns.combined.djview.BeatModel" />
+-
+-<html>
+-<head>
+-<title>DJ View</title>
+-</head>
+-<body>
+-
+-<h1>DJ View</h1>
+-Beats per minutes = <jsp:getProperty name="beatModel" property="BPM" /> 
+-<br />
+-<hr>
+-<br />
+-
+-<form method="get" action="/djview/servlet/DJViewServlet">
+-BPM: <input type=text name="bpm" 
+-            value="<jsp:getProperty name='beatModel' property='BPM' />">
+-&nbsp;
+-
+-<input type="submit" name="set" value="set"><br />
+-<input type="submit" name="decrease" value="<<">
+-<input type="submit" name="increase" value=">>"><br />
+-<input type="submit" name="on" value="on">
+-<input type="submit" name="off" value="off"><br />
+-</form>
+-
+-</body>
+-</html>
+-
+diff --git a/src/headfirst/designpatterns/combined/djview/jsp/index.html b/src/headfirst/designpatterns/combined/djview/jsp/index.html
+deleted file mode 100644
+index 497b542..0000000
+--- a/src/headfirst/designpatterns/combined/djview/jsp/index.html
++++ /dev/null
+@@ -1,10 +0,0 @@
+-<!doctype html>
+-<html>
+-<head>
+-	<meta charset="utf-8">
+-	<title>DJView Web Application</title>
+-</head>
+-<body>
+-	<a href="/djview/djview.jsp">DJView</a>
+-</body>
+-</html>
+diff --git a/src/headfirst/designpatterns/prototype/Client.java b/src/headfirst/designpatterns/prototype/Client.java
+deleted file mode 100644
+index 6fbf316..0000000
+--- a/src/headfirst/designpatterns/prototype/Client.java
++++ /dev/null
+@@ -1,25 +0,0 @@
+-package headfirst.designpatterns.prototype;
+-
+-public class Client {
+-	public static void main(String[] args) {
+-		Prototype p1 = new ConcretePrototype1();
+-		Prototype p2 = new ConcretePrototype2();
+-		
+-		// ... later ...
+-		operation(p1);
+-		operation(p2);
+-	}
+-	
+-	public static Prototype operation(Prototype p) {
+-		// This code doesn't know or care what the concrete type of p is
+-		Prototype pCopy = null;
+-		try {
+-			pCopy = p.copy();
+-			// do something useful with pCopy
+-			System.out.println("Operating with pCopy!");
+-		} catch (CloneNotSupportedException e) {
+-			e.printStackTrace();
+-		}
+-		return pCopy;
+-	}
+-}
+\ No newline at end of file
+diff --git a/src/headfirst/designpatterns/prototype/Dragon.java b/src/headfirst/designpatterns/prototype/Dragon.java
+deleted file mode 100644
+index 94ace77..0000000
+--- a/src/headfirst/designpatterns/prototype/Dragon.java
++++ /dev/null
+@@ -1,13 +0,0 @@
+-package headfirst.designpatterns.prototype;
+-
+-public class Dragon extends Monster {
+-	public Dragon(String name, boolean hasWings) {
+-		super(name);
+-		this.hasWings = hasWings;
+-		this.canBreatheFire = true;
+-	}
+-	// Each concrete monster could determine how best to clone itself
+-	public Monster copy() throws CloneNotSupportedException {
+-		return (Monster)this.clone();
+-	}
+-}
+\ No newline at end of file
+diff --git a/src/headfirst/designpatterns/prototype/Drakon.java b/src/headfirst/designpatterns/prototype/Drakon.java
+deleted file mode 100644
+index de18482..0000000
+--- a/src/headfirst/designpatterns/prototype/Drakon.java
++++ /dev/null
+@@ -1,16 +0,0 @@
+-package headfirst.designpatterns.prototype;
+-
+-public class Drakon extends Monster {
+-	public Drakon(String name, int numHeads, boolean canBreatheFire) {
+-		super(name);
+-		this.numHeads = numHeads;
+-		this.canBreatheFire = canBreatheFire;
+-	}
+-	public void spitPoison() {
+-		System.out.println(this.name + " spits poison");
+-	}
+-	// Each concrete monster could determine how best to clone itself
+-	public Monster copy() throws CloneNotSupportedException {
+-		return (Monster)this.clone();
+-	}
+-}
+\ No newline at end of file
+diff --git a/src/headfirst/designpatterns/prototype/Monster.java b/src/headfirst/designpatterns/prototype/Monster.java
+deleted file mode 100644
+index 000d7c4..0000000
+--- a/src/headfirst/designpatterns/prototype/Monster.java
++++ /dev/null
+@@ -1,26 +0,0 @@
+-package headfirst.designpatterns.prototype;
+-
+-public abstract class Monster implements Cloneable {
+-	boolean eatsChildren = true;
+-	boolean hasWings = false;
+-	int numHeads = 1;
+-	boolean canBreatheFire = false;
+-	String name;
+-	public Monster(String name) {
+-		this.name = name;
+-	}
+-	public void spitPoison() { } // default is do nothing
+-	public void setName(String name) {
+-		this.name = name;
+-	}
+-	
+-	public abstract Monster copy() throws CloneNotSupportedException;
+-	
+-	public String toString() {
+-		StringBuffer s = new StringBuffer("I'm a monster named " + this.name + " with " + this.numHeads + " head(s). ");
+-		if (this.canBreatheFire) { s.append("I can breathe fire. "); }
+-		if (this.eatsChildren) { s.append("I eat children. "); }
+-		if (this.hasWings) { s.append("I have wings. "); }
+-		return s.toString();
+-	}
+-}
+\ No newline at end of file
+diff --git a/src/headfirst/designpatterns/prototype/monsters.html b/src/headfirst/designpatterns/prototype/monsters.html
+deleted file mode 100644
+index d44506f..0000000
+--- a/src/headfirst/designpatterns/prototype/monsters.html
++++ /dev/null
+@@ -1,50 +0,0 @@
+-<!doctype html>
+-<html>
+-<head>
+-<title>Monsters</title>
+-<meta charset="utf-8">
+-<script>
+-class Monster {
+-	eatsChildren = true;
+-	hasWings = false;
+-	numHeads = 1;
+-	canBreatheFire = false;
+-	constructor(name) { 
+-		this.name = name;
+-	}
+-	spitPoison() { }
+-}
+-class Dragon extends Monster {
+-	constructor(name, hasWings) {
+-		super(name);
+-		this.hasWings = hasWings;
+-	}
+-}
+-class Drakon extends Monster {
+-	constructor(name, numHeads, canBreatheFire) {
+-		super(name);
+-		this.numHeads = numHeads;
+-		this.canBreatheFire = canBreatheFire;
+-	}
+-	spitPoison() {
+-		console.log(this.name + " spits poison");
+-	}
+-}
+-
+-let ladon = new Dragon("Ladon", false);
+-let drakon = new Drakon("Drakon", 2, true);
+-
+-//let laconian = Object.create(drakon);
+-let laconian = makeMonster(drakon);
+-laconian.name = "Laconian";
+-
+-function makeMonster(p) {
+-	return Object.create(p);
+-}
+-
+-</script>
+-</head>
+-<body>
+-</body>
+-</html>
+-
+-- 
+2.30.0.windows.1
+
